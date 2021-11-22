@@ -1113,10 +1113,9 @@
   resolved "https://registry.yarnpkg.com/@types/uuid/-/uuid-8.3.3.tgz#c6a60686d953dbd1b1d45e66f4ecdbd5d471b4d0"
   integrity sha512-0LbEEx1zxrYB3pgpd1M5lEhLcXjKJnYghvhTRgaBeUivLHMDM1TzF3IJ6hXU2+8uA4Xz+5BA63mtZo5DjVT8iA==
 
-"@webarkit/jsartoolkit-nft@^0.9.7":
+"@webarkit/jsartoolkit-nft@https://github.com/Squareys/jsartoolkitNFT.git#11370820ad45ce550a0aec526ca15980f56c351d":
   version "0.9.7"
-  resolved "https://registry.yarnpkg.com/@webarkit/jsartoolkit-nft/-/jsartoolkit-nft-0.9.7.tgz#65023219d221e785a353c85a83e12ccdc93f8921"
-  integrity sha512-Qm6lfiLt7c3tDn2c36id94z35AiI+BpcoGc+SrXqIWNZaWJt5Rurl1dsGU9+HknHHtUcKGv7sKTHAXWevmAMDA==
+  resolved "https://github.com/Squareys/jsartoolkitNFT.git#11370820ad45ce550a0aec526ca15980f56c351d"
   dependencies:
     "@babel/runtime" "^7.15.4"
     axios "^0.23.0"

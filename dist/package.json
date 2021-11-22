@@ -65,7 +65,7 @@
         "ecstatic": "^4.1.4"
     },
     "dependencies": {
-        "@webarkit/jsartoolkit-nft": "^0.9.7",
+        "@webarkit/jsartoolkit-nft": "https://github.com/Squareys/jsartoolkitNFT.git#11370820ad45ce550a0aec526ca15980f56c351d",
         "terser-webpack-plugin": "^5.2.5",
         "uuid": "^8.3.2"
     }
