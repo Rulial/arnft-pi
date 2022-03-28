@@ -62,7 +62,7 @@ export default class NFTWorker {
      * @param h the height of the camera.
      * @param uuid the uuid of the marker assigned by the ARnft constructor.
      */
-    constructor(markerURL: string, w: number, h: number, uuid: string, name: string) {
+    constructor(markerURL: Array<string>, w: number, h: number, uuid: string, name: string) {
         this.oef = false;
         this.markerURL = markerURL;
         this.vw = w;
@@ -85,7 +85,8 @@ export default class NFTWorker {
     public async initialize(cameraURL: string, renderUpdate: () => void, trackUpdate: () => void): Promise<boolean> {
         this.worker = new Worker();
         const worker = this.worker;
-        this.target.addEventListener("terminateWorker", function () {
+
+        this.target.addEventListener("terminateWorker-" + this.name, function () {
             worker.postMessage({ type: "stop" });
             worker.terminate();
         });
@@ -170,10 +171,10 @@ export default class NFTWorker {
                     this.target.dispatchEvent(new CustomEvent<object>("nftLoaded-" + this.uuid));
                     break;
                 }
-                case "nftData": {
-                    const nft = JSON.parse(msg.nft);
+                case "markerInfos": {
+                    const marker = msg.marker;
                     const nftEvent = new CustomEvent<object>("getNFTData-" + this.uuid + "-" + this.name, {
-                        detail: { dpi: nft.dpi, width: nft.width, height: nft.height },
+                        detail: { dpi: marker.dpi, width: marker.width, height: marker.height },
                     });
                     this.target.dispatchEvent(nftEvent);
                     break;
@@ -250,18 +251,6 @@ export default class NFTWorker {
     }
 
     public destroy(): void {}
-
-    /**
-     * Stop the NFT tracking and the video streaming.
-     */
-    static stopNFT() {
-        const target = window || global;
-        console.log("Stop NFT");
-        var event = new Event("terminateWorker");
-        target.dispatchEvent(event);
-        var event = new Event("stopStreaming");
-        target.dispatchEvent(event);
-    }
 }
 
 //export default null as any;
