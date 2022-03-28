@@ -37,11 +37,19 @@ const load = (msg) => {
         ar = arController;
         const cameraMatrix = ar.getCameraMatrix();
         ar.addEventListener("getNFTMarker", (ev) => {
-            interpolate(ev.data.matrixGL_RH);
-            markerResult = {
-                type: "found",
-                matrixGL_RH: JSON.stringify(ev.data.matrixGL_RH),
-            };
+            if (msg.oef == true) {
+                markerResult = {
+                    type: "found",
+                    matrixGL_RH: JSON.stringify(ev.data.matrixGL_RH),
+                };
+            }
+            else {
+                let mGL_RH = interpolate(ev.data.matrixGL_RH);
+                markerResult = {
+                    type: "found",
+                    matrixGL_RH: JSON.stringify(mGL_RH),
+                };
+            }
         });
         const regexM = /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#()?&//=]*)/gim;
         const reM = regexM.test(msg.marker);
@@ -105,9 +113,7 @@ const load = (msg) => {
 const interpolate = (matrix) => {
     for (let i = 0; i < matrix.length; i++) {
         currentMatrix.delta[i] = matrix[i] - currentMatrix.interpolated[i];
-        currentMatrix.interpolated[i] =
-            currentMatrix.interpolated[i] +
-                currentMatrix.delta[i] / interpolationFactor;
+        currentMatrix.interpolated[i] = currentMatrix.interpolated[i] + currentMatrix.delta[i] / interpolationFactor;
     }
     return currentMatrix.interpolated;
 };

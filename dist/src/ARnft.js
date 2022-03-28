@@ -7,11 +7,27 @@ import { v4 as uuidv4 } from "uuid";
 import packageJson from "../package.json";
 const { version } = packageJson;
 export default class ARnft {
+    cameraView;
+    appData;
+    width;
+    height;
+    configUrl;
+    markerUrl;
+    camData;
+    autoUpdate = true;
+    controllers;
+    static entities;
+    _oef;
+    target;
+    uuid;
+    version;
+    initialized;
+    _views;
     constructor(width, height, configUrl) {
-        this.autoUpdate = true;
         this.width = width;
         this.height = height;
         this.configUrl = configUrl;
+        this._oef = false;
         this.target = window || global;
         this.uuid = uuidv4();
         this.version = version;
@@ -89,6 +105,7 @@ export default class ARnft {
             const trackUpdate = () => (stats ? statsWorker.update() : null);
             markerUrls.forEach((markerUrl, index) => {
                 this.controllers.push(new NFTWorker(markerUrl, this.width, this.height, this.uuid, names[index][0]));
+                this.controllers[index].Oef = this._oef;
                 this.controllers[index].initialize(this.appData.cameraPara, renderUpdate, trackUpdate);
             });
             this.initialized = true;
@@ -142,6 +159,7 @@ export default class ARnft {
             const trackUpdate = () => (stats ? statsWorker.update() : null);
             markerUrls.forEach((markerUrl, index) => {
                 this.controllers.push(new NFTWorker(markerUrl, this.width, this.height, this.uuid, names[index]));
+                this.controllers[index].Oef = this._oef;
                 this.controllers[index].initialize(this.appData.cameraPara, renderUpdate, trackUpdate);
             });
             this.initialized = true;
@@ -172,6 +190,9 @@ export default class ARnft {
         if (this.cameraView != null) {
             this.controllers.forEach((controller) => controller.process(this.cameraView.image, this.cameraView.frame));
         }
+    }
+    enableOef() {
+        this._oef = true;
     }
     static getEntities() {
         return this.entities;
