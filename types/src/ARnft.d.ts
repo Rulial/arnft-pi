@@ -36,6 +36,7 @@ export default class ARnft {
     autoUpdate: boolean;
     private controllers;
     private static entities;
+    private _oef;
     private target;
     private uuid;
     private version;
@@ -48,6 +49,7 @@ export default class ARnft {
     private _initialize;
     initializeRaw(markerUrls: Array<string>, names: Array<string>, cameraView: ICameraViewRenderer, stats: boolean): Promise<this>;
     update(): void;
+    enableOef(): void;
     static getEntities(): IEntity[];
     getEventTarget(): EventTarget;
     get views(): Readonly<IViews>;

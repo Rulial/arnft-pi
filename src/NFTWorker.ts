@@ -39,6 +39,8 @@ import { getWindowSize } from "./utils/ARnftUtils";
 export default class NFTWorker {
     private worker: Worker;
 
+    private oef: boolean;
+
     private markerURL: any;
 
     private _processing: boolean = false;
@@ -61,6 +63,7 @@ export default class NFTWorker {
      * @param uuid the uuid of the marker assigned by the ARnft constructor.
      */
     constructor(markerURL: string, w: number, h: number, uuid: string, name: string) {
+        this.oef = false;
         this.markerURL = markerURL;
         this.vw = w;
         this.vh = h;
@@ -123,6 +126,7 @@ export default class NFTWorker {
             ph: ph,
             camera_para: cameraURL,
             marker: this.markerURL,
+            oef: this.oef
         });
 
         this.worker.onmessage = (ev: any) => {
@@ -220,6 +224,10 @@ export default class NFTWorker {
             });
             this.target.dispatchEvent(matrixGLrhEvent);
         }
+    }
+
+    public set Oef(oef: boolean) {
+        this.oef = oef;
     }
 
     public isReady() {

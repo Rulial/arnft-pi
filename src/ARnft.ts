@@ -91,6 +91,7 @@ export default class ARnft {
     public autoUpdate: boolean = true;
     private controllers: NFTWorker[];
     private static entities: IEntity[];
+    private _oef: boolean;
     private target: EventTarget;
     private uuid: string;
     private version: string;
@@ -111,6 +112,7 @@ export default class ARnft {
         this.width = width;
         this.height = height;
         this.configUrl = configUrl;
+        this._oef = false;
         this.target = window || global;
         this.uuid = uuidv4();
         this.version = version;
@@ -237,6 +239,7 @@ export default class ARnft {
                 const trackUpdate = () => (stats ? statsWorker.update() : null);
                 markerUrls.forEach((markerUrl: string, index: number) => {
                     this.controllers.push(new NFTWorker(markerUrl, this.width, this.height, this.uuid, names[index]));
+                    this.controllers[index].Oef = this._oef;
                     this.controllers[index].initialize(this.appData.cameraPara, renderUpdate, trackUpdate);
                 });
 
@@ -322,6 +325,7 @@ export default class ARnft {
                 const trackUpdate = () => (stats ? statsWorker.update() : null);
                 markerUrls.forEach((markerUrl: string, index: number) => {
                     this.controllers.push(new NFTWorker(markerUrl, this.width, this.height, this.uuid, names[index]));
+                    this.controllers[index].Oef = this._oef;
                     this.controllers[index].initialize(this.appData.cameraPara, renderUpdate, trackUpdate);
                 });
 
@@ -361,6 +365,10 @@ export default class ARnft {
         if (this.cameraView != null) {
             this.controllers.forEach((controller) => controller.process(this.cameraView.image, this.cameraView.frame));
         }
+    }
+
+    public enableOef(): void {
+        this._oef = true;
     }
 
     public static getEntities(): IEntity[] {

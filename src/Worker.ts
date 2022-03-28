@@ -61,6 +61,12 @@ let lastFrame: number = 0;
 let ar: any = null;
 let markerResult: any = null;
 
+const currentMatrix = {
+    delta: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    interpolated: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+};
+const interpolationFactor = 24;
+
 const load = (msg: any) => {
     const basePath = self.origin;
     let cameraParamUrl: string, nftMarkerUrl: string;
@@ -70,10 +76,18 @@ const load = (msg: any) => {
         const cameraMatrix = ar.getCameraMatrix();
 
         ar.addEventListener("getNFTMarker", (ev: any) => {
-            markerResult = {
-                type: "found",
-                matrixGL_RH: JSON.stringify(ev.data.matrixGL_RH),
-            };
+            if (msg.oef == true) {
+                markerResult = {
+                    type: "found",
+                    matrixGL_RH: JSON.stringify(ev.data.matrixGL_RH),
+                };
+            } else {
+                let mGL_RH = interpolate(ev.data.matrixGL_RH);
+                markerResult = {
+                    type: "found",
+                    matrixGL_RH: JSON.stringify(mGL_RH),
+                };
+            }
         });
         // after the ARController is set up, we load the NFT Marker
         const regexM =
@@ -130,6 +144,14 @@ const load = (msg: any) => {
     console.debug("Loading camera at:", cameraParamUrl);
 
     ARControllerNFT.initWithDimensions(msg.pw, msg.ph, cameraParamUrl).then(onLoad).catch(onError);
+};
+
+const interpolate = (matrix: any) => {
+    for (let i = 0; i < matrix.length; i++) {
+        currentMatrix.delta[i] = matrix[i] - currentMatrix.interpolated[i];
+        currentMatrix.interpolated[i] = currentMatrix.interpolated[i] + currentMatrix.delta[i] / interpolationFactor;
+    }
+    return currentMatrix.interpolated;
 };
 
 const process = (next: any, frame: number) => {

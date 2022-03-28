@@ -1,5 +1,6 @@
 export default class NFTWorker {
     private worker;
+    private oef;
     private markerURL;
     private _processing;
     private vw;
@@ -13,6 +14,7 @@ export default class NFTWorker {
     process(imagedata: ImageData, frame: number): void;
     protected load(cameraURL: string, renderUpdate: () => void, trackUpdate: () => void): Promise<boolean>;
     found(msg: any): void;
+    set Oef(oef: boolean);
     isReady(): boolean;
     getUuid(): string;
     getName(): string;
