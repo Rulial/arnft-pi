@@ -1,5 +1,6 @@
 export default class NFTWorker {
     private worker;
+    private interpolationFactor;
     private oef;
     private markerURL;
     private _processing;
@@ -9,7 +10,7 @@ export default class NFTWorker {
     private uuid;
     private name;
     protected ready: boolean;
-    constructor(markerURL: Array<string>, w: number, h: number, uuid: string, name: string);
+    constructor(markerURL: Array<string>, w: number, h: number, uuid: string, name: string, interpolationFactor: number);
     initialize(cameraURL: string, renderUpdate: () => void, trackUpdate: () => void): Promise<boolean>;
     process(imagedata: ImageData, frame: number): void;
     protected load(cameraURL: string, renderUpdate: () => void, trackUpdate: () => void): Promise<boolean>;

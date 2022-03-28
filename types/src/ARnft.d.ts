@@ -36,6 +36,7 @@ export default class ARnft {
     autoUpdate: boolean;
     private controllers;
     private static entities;
+    private _interpolationFactor;
     private _oef;
     private target;
     private uuid;
@@ -50,6 +51,8 @@ export default class ARnft {
     initializeRaw(markerUrls: Array<Array<string>>, names: Array<string>, cameraView: ICameraViewRenderer, stats: boolean): Promise<this>;
     update(): void;
     enableOef(): void;
+    set interpolationFactor(iF: number);
+    get interpolationFactor(): number;
     static getEntities(): IEntity[];
     getEventTarget(): EventTarget;
     get views(): Readonly<IViews>;

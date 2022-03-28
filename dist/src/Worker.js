@@ -26,7 +26,7 @@ const currentMatrix = {
     delta: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
     interpolated: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
 };
-const interpolationFactor = 24;
+const interpolationFactor = 2;
 const load = (msg) => {
     const basePath = self.origin;
     let cameraParamUrl;

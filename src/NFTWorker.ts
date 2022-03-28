@@ -38,7 +38,8 @@ import { getWindowSize } from "./utils/ARnftUtils";
 
 export default class NFTWorker {
     private worker: Worker;
-
+    
+    private interpolationFactor: number;
     private oef: boolean;
 
     private markerURL: any;
@@ -62,7 +63,8 @@ export default class NFTWorker {
      * @param h the height of the camera.
      * @param uuid the uuid of the marker assigned by the ARnft constructor.
      */
-    constructor(markerURL: Array<string>, w: number, h: number, uuid: string, name: string) {
+    constructor(markerURL: Array<string>, w: number, h: number, uuid: string, name: string, interpolationFactor: number) {
+        this.interpolationFactor = interpolationFactor;
         this.oef = false;
         this.markerURL = markerURL;
         this.vw = w;
@@ -126,6 +128,7 @@ export default class NFTWorker {
             pw: pw,
             ph: ph,
             camera_para: cameraURL,
+            interpolationFactor: 24,
             marker: this.markerURL,
             oef: this.oef,
         });

@@ -91,6 +91,7 @@ export default class ARnft {
     public autoUpdate: boolean = true;
     private controllers: NFTWorker[];
     private static entities: IEntity[];
+    private _interpolationFactor: number;
     private _oef: boolean;
     private target: EventTarget;
     private uuid: string;
@@ -112,6 +113,7 @@ export default class ARnft {
         this.width = width;
         this.height = height;
         this.configUrl = configUrl;
+        this._interpolationFactor = 1;
         this._oef = false;
         this.target = window || global;
         this.uuid = uuidv4();
@@ -250,7 +252,7 @@ export default class ARnft {
                 const trackUpdate = () => (stats ? statsWorker.update() : null);
                 markerUrls.forEach((markerUrl: Array<string>, index: number) => {
                     this.controllers.push(
-                        new NFTWorker(markerUrl, this.width, this.height, this.uuid, names[index][0])
+                        new NFTWorker(markerUrl, this.width, this.height, this.uuid, names[index][0], this._interpolationFactor)
                     );
                     this.controllers[index].Oef = this._oef;
                     this.controllers[index].initialize(this.appData.cameraPara, renderUpdate, trackUpdate);
@@ -337,7 +339,7 @@ export default class ARnft {
                 const renderUpdate = () => (stats ? statsMain.update() : null);
                 const trackUpdate = () => (stats ? statsWorker.update() : null);
                 markerUrls.forEach((markerUrl: Array<string>, index: number) => {
-                    this.controllers.push(new NFTWorker(markerUrl, this.width, this.height, this.uuid, names[index]));
+                    this.controllers.push(new NFTWorker(markerUrl, this.width, this.height, this.uuid, names[index], this._interpolationFactor));
                     this.controllers[index].Oef = this._oef;
                     this.controllers[index].initialize(this.appData.cameraPara, renderUpdate, trackUpdate);
                 });
@@ -382,6 +384,14 @@ export default class ARnft {
 
     public enableOef(): void {
         this._oef = true;
+    }
+
+    public set interpolationFactor(iF: number) {
+        this.interpolationFactor = iF;
+    }
+
+    public get interpolationFactor() {
+        return this.interpolationFactor;
     }
 
     public static getEntities(): IEntity[] {
