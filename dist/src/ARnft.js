@@ -68,6 +68,7 @@ export default class ARnft {
         getConfig(this.configUrl)
             .then((data) => {
             this.appData = data;
+            this.addPath = data.addPath;
             this._views = Container.createContainer(this.appData);
             this._views.loading = Container.createLoading(this.appData);
             this._views.stats = Container.createStats(this.appData.stats.createHtml, this.appData);
@@ -123,6 +124,7 @@ export default class ARnft {
         getConfig(this.configUrl)
             .then((data) => {
             this.appData = data;
+            this.addPath = data.addPath;
             this._views = Container.createContainer(this.appData);
             this._views.loading = Container.createLoading(this.appData);
             this._views.stats = Container.createStats(this.appData.stats.createHtml, this.appData);

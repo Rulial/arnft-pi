@@ -53,6 +53,7 @@ export default class NFTWorker {
 
     private uuid: string;
     private name: string;
+    private addPath: string;
 
     protected ready: boolean;
 
@@ -63,7 +64,7 @@ export default class NFTWorker {
      * @param h the height of the camera.
      * @param uuid the uuid of the marker assigned by the ARnft constructor.
      */
-    constructor(markerURL: Array<string>, w: number, h: number, uuid: string, name: string, interpolationFactor: number) {
+    constructor(markerURL: Array<string>, w: number, h: number, uuid: string, name: string, interpolationFactor: number, addPath: string) {
         this.interpolationFactor = interpolationFactor;
         this.oef = false;
         this.markerURL = markerURL;
@@ -73,6 +74,7 @@ export default class NFTWorker {
         this.uuid = uuid;
         this.name = name;
         this.ready = false;
+        this.addPath = addPath;
     }
 
     /**
@@ -131,6 +133,7 @@ export default class NFTWorker {
             interpolationFactor: 24,
             marker: this.markerURL,
             oef: this.oef,
+            addPath: this.addPath,
         });
 
         this.worker.onmessage = (ev: any) => {

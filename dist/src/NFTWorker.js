@@ -1,7 +1,7 @@
 import Worker from "worker-loader?inline=no-fallback!./Worker";
 import { getWindowSize } from "./utils/ARnftUtils";
 export default class NFTWorker {
-    constructor(markerURL, w, h, uuid, name) {
+    constructor(markerURL, w, h, uuid, name, addPath) {
         this._processing = false;
         this.oef = false;
         this.markerURL = markerURL;
@@ -11,6 +11,7 @@ export default class NFTWorker {
         this.uuid = uuid;
         this.name = name;
         this.ready = false;
+        this.addPath = addPath;
     }
     async initialize(cameraURL, renderUpdate, trackUpdate) {
         this.worker = new Worker();
@@ -39,6 +40,7 @@ export default class NFTWorker {
             camera_para: cameraURL,
             marker: this.markerURL,
             oef: this.oef,
+            addPath: this.addPath,
         });
         this.worker.onmessage = (ev) => {
             var msg = ev.data;
