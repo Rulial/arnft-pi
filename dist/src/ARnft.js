@@ -12,6 +12,7 @@ export default class ARnft {
         this.width = width;
         this.height = height;
         this.configUrl = configUrl;
+        this._interpolationFactor = 1;
         this._oef = false;
         this.target = window || global;
         this.uuid = uuidv4();
@@ -90,7 +91,7 @@ export default class ARnft {
             const renderUpdate = () => (stats ? statsMain.update() : null);
             const trackUpdate = () => (stats ? statsWorker.update() : null);
             markerUrls.forEach((markerUrl, index) => {
-                this.controllers.push(new NFTWorker(markerUrl, this.width, this.height, this.uuid, names[index][0]));
+                this.controllers.push(new NFTWorker(markerUrl, this.width, this.height, this.uuid, names[index][0], this._interpolationFactor, this.addPath));
                 this.controllers[index].Oef = this._oef;
                 this.controllers[index].initialize(this.appData.cameraPara, renderUpdate, trackUpdate);
             });
@@ -145,7 +146,7 @@ export default class ARnft {
             const renderUpdate = () => (stats ? statsMain.update() : null);
             const trackUpdate = () => (stats ? statsWorker.update() : null);
             markerUrls.forEach((markerUrl, index) => {
-                this.controllers.push(new NFTWorker(markerUrl, this.width, this.height, this.uuid, names[index]));
+                this.controllers.push(new NFTWorker(markerUrl, this.width, this.height, this.uuid, names[index], this._interpolationFactor, this.addPath));
                 this.controllers[index].Oef = this._oef;
                 this.controllers[index].initialize(this.appData.cameraPara, renderUpdate, trackUpdate);
             });
@@ -180,6 +181,12 @@ export default class ARnft {
     }
     enableOef() {
         this._oef = true;
+    }
+    set interpolationFactor(iF) {
+        this.interpolationFactor = iF;
+    }
+    get interpolationFactor() {
+        return this.interpolationFactor;
     }
     static getEntities() {
         return this.entities;

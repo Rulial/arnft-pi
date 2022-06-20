@@ -26,13 +26,15 @@ const currentMatrix = {
     delta: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
     interpolated: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
 };
-const interpolationFactor = 2;
+let interpolationFactor = 1;
 const load = (msg) => {
     const basePath = self.origin;
     let cameraParamUrl;
     let nftMarkerUrls = [];
     let markerLength = msg.marker.length;
     console.debug("Base path:", basePath);
+    console.log("Setting interpolation factor to: ", msg.interpolationFactor);
+    interpolationFactor = msg.interpolationFactor;
     const onLoad = (arController) => {
         ar = arController;
         const cameraMatrix = ar.getCameraMatrix();
